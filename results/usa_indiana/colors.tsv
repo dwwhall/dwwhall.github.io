@@ -1,0 +1,42 @@
+location	Madison	#4988C5
+location	San Francisco	#7EB876
+location	East Feliciana Parish	#CBB742
+
+division	USA	#5E1D9D
+division	Florida	#4B25B1
+division	Georgia	#4137C2
+division	Louisiana	#3F4CCB
+division	North Carolina	#3F62D0
+division	South Carolina	#4376CD
+division	Virginia	#4887C6
+division	Connecticut	#4F97BB
+division	New York	#58A2AC
+division	Massachusetts	#62AB9C
+division	Pennsylvania	#6DB38A
+division	Ohio	#7BB77A
+division	Indiana	#89BB6B
+division	Illinois	#98BD5E
+division	Wisconsin	#A8BE54
+division	Michigan	#B7BD4B
+division	Nebraska	#C5B945
+division	Arizona	#D2B340
+division	Utah	#DDAA3C
+division	Idaho	#E39C39
+division	California	#E68B35
+division	Washington	#E67631
+division	Hawaii	#E35C2C
+division	Jamaica	#DF4227
+division	Alaska	#DB2823
+
+country	Jamaica	#4C90C0
+country	USA	#AEBD50
+
+recency	Older	#416DCE
+recency	One month ago	#59A3AA
+recency	One week ago	#84BA6F
+recency	3-7 days ago	#BBBC49
+recency	1-2 days ago	#E29D39
+recency	New	#E1502A
+
+region	North America	#4C90C0
+
