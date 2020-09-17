@@ -1,0 +1,385 @@
+{
+    "total_runtime": 533.411614894867,
+    "rules": {
+        "colors": {
+            "mean-runtime": 4.784424066543579,
+            "min-runtime": 4.784424066543579,
+            "max-runtime": 4.784424066543579
+        },
+        "recency": {
+            "mean-runtime": 7.832038879394531,
+            "min-runtime": 7.832038879394531,
+            "max-runtime": 7.832038879394531
+        },
+        "filter": {
+            "mean-runtime": 9.123042821884155,
+            "min-runtime": 9.123042821884155,
+            "max-runtime": 9.123042821884155
+        },
+        "partition_sequences": {
+            "mean-runtime": 5.789797067642212,
+            "min-runtime": 5.789797067642212,
+            "max-runtime": 5.789797067642212
+        },
+        "align": {
+            "mean-runtime": 117.87102437019348,
+            "min-runtime": 82.75748085975647,
+            "max-runtime": 136.6052610874176
+        },
+        "aggregate_alignments": {
+            "mean-runtime": 1.1255161762237549,
+            "min-runtime": 1.1255161762237549,
+            "max-runtime": 1.1255161762237549
+        },
+        "diagnostic": {
+            "mean-runtime": 11.42893385887146,
+            "min-runtime": 11.42893385887146,
+            "max-runtime": 11.42893385887146
+        },
+        "refilter": {
+            "mean-runtime": 6.143712043762207,
+            "min-runtime": 6.143712043762207,
+            "max-runtime": 6.143712043762207
+        },
+        "mask": {
+            "mean-runtime": 2.0623440742492676,
+            "min-runtime": 2.0623440742492676,
+            "max-runtime": 2.0623440742492676
+        },
+        "subsample": {
+            "mean-runtime": 4.8893561363220215,
+            "min-runtime": 4.8893561363220215,
+            "max-runtime": 4.8893561363220215
+        },
+        "combine_samples": {
+            "mean-runtime": 2.7518179416656494,
+            "min-runtime": 2.7518179416656494,
+            "max-runtime": 2.7518179416656494
+        },
+        "tree": {
+            "mean-runtime": 9.363976955413818,
+            "min-runtime": 9.363976955413818,
+            "max-runtime": 9.363976955413818
+        },
+        "refine": {
+            "mean-runtime": 303.9509952068329,
+            "min-runtime": 303.9509952068329,
+            "max-runtime": 303.9509952068329
+        },
+        "traits": {
+            "mean-runtime": 16.315478086471558,
+            "min-runtime": 16.315478086471558,
+            "max-runtime": 16.315478086471558
+        },
+        "tip_frequencies": {
+            "mean-runtime": 6.780134916305542,
+            "min-runtime": 6.780134916305542,
+            "max-runtime": 6.780134916305542
+        },
+        "ancestral": {
+            "mean-runtime": 20.259793043136597,
+            "min-runtime": 20.259793043136597,
+            "max-runtime": 20.259793043136597
+        },
+        "translate": {
+            "mean-runtime": 10.598905086517334,
+            "min-runtime": 10.598905086517334,
+            "max-runtime": 10.598905086517334
+        },
+        "clades": {
+            "mean-runtime": 5.384505748748779,
+            "min-runtime": 5.384505748748779,
+            "max-runtime": 5.384505748748779
+        },
+        "export": {
+            "mean-runtime": 2.9472649097442627,
+            "min-runtime": 2.9472649097442627,
+            "max-runtime": 2.9472649097442627
+        },
+        "incorporate_travel_history": {
+            "mean-runtime": 0.319166898727417,
+            "min-runtime": 0.319166898727417,
+            "max-runtime": 0.319166898727417
+        },
+        "finalize": {
+            "mean-runtime": 0.30632805824279785,
+            "min-runtime": 0.30632805824279785,
+            "max-runtime": 0.30632805824279785
+        }
+    },
+    "files": {
+        "results/global/colors.tsv": {
+            "start-time": "Thu Jul 16 09:26:24 2020",
+            "stop-time": "Thu Jul 16 09:26:28 2020",
+            "duration": 4.784424066543579,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/recency.json": {
+            "start-time": "Thu Jul 16 09:26:24 2020",
+            "stop-time": "Thu Jul 16 09:26:31 2020",
+            "duration": 7.832038879394531,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/filtered.fasta": {
+            "start-time": "Thu Jul 16 09:26:24 2020",
+            "stop-time": "Thu Jul 16 09:26:33 2020",
+            "duration": 9.123042821884155,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/split_sequences/": {
+            "start-time": "Thu Jul 16 09:26:33 2020",
+            "stop-time": "Thu Jul 16 09:26:39 2020",
+            "duration": 5.789797067642212,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/split_alignments/2.fasta": {
+            "start-time": "Thu Jul 16 09:26:39 2020",
+            "stop-time": "Thu Jul 16 09:28:01 2020",
+            "duration": 82.75748085975647,
+            "priority": 0,
+            "resources": {
+                "_cores": 2,
+                "_nodes": 1
+            }
+        },
+        "results/split_alignments/1.fasta": {
+            "start-time": "Thu Jul 16 09:26:39 2020",
+            "stop-time": "Thu Jul 16 09:28:53 2020",
+            "duration": 134.25033116340637,
+            "priority": 0,
+            "resources": {
+                "_cores": 2,
+                "_nodes": 1
+            }
+        },
+        "results/split_alignments/0.fasta": {
+            "start-time": "Thu Jul 16 09:26:39 2020",
+            "stop-time": "Thu Jul 16 09:28:55 2020",
+            "duration": 136.6052610874176,
+            "priority": 0,
+            "resources": {
+                "_cores": 2,
+                "_nodes": 1
+            }
+        },
+        "results/aligned.fasta": {
+            "start-time": "Thu Jul 16 09:28:55 2020",
+            "stop-time": "Thu Jul 16 09:28:56 2020",
+            "duration": 1.1255161762237549,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/sequence-diagnostics.tsv": {
+            "start-time": "Thu Jul 16 09:28:56 2020",
+            "stop-time": "Thu Jul 16 09:29:08 2020",
+            "duration": 11.42893385887146,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/flagged-sequences.tsv": {
+            "start-time": "Thu Jul 16 09:28:56 2020",
+            "stop-time": "Thu Jul 16 09:29:08 2020",
+            "duration": 11.42893385887146,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/to-exclude.txt": {
+            "start-time": "Thu Jul 16 09:28:56 2020",
+            "stop-time": "Thu Jul 16 09:29:08 2020",
+            "duration": 11.42893385887146,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/aligned-filtered.fasta": {
+            "start-time": "Thu Jul 16 09:29:08 2020",
+            "stop-time": "Thu Jul 16 09:29:14 2020",
+            "duration": 6.143712043762207,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/masked.fasta": {
+            "start-time": "Thu Jul 16 09:29:14 2020",
+            "stop-time": "Thu Jul 16 09:29:16 2020",
+            "duration": 2.0623440742492676,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/sample-global.fasta": {
+            "start-time": "Thu Jul 16 09:29:16 2020",
+            "stop-time": "Thu Jul 16 09:29:21 2020",
+            "duration": 4.8893561363220215,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/subsampled_alignment.fasta": {
+            "start-time": "Thu Jul 16 09:29:21 2020",
+            "stop-time": "Thu Jul 16 09:29:24 2020",
+            "duration": 2.7518179416656494,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/tree_raw.nwk": {
+            "start-time": "Thu Jul 16 09:29:24 2020",
+            "stop-time": "Thu Jul 16 09:29:33 2020",
+            "duration": 9.363976955413818,
+            "priority": 0,
+            "resources": {
+                "_cores": 4,
+                "_nodes": 1,
+                "mem_mb": 240
+            }
+        },
+        "results/global/tree.nwk": {
+            "start-time": "Thu Jul 16 09:29:33 2020",
+            "stop-time": "Thu Jul 16 09:34:37 2020",
+            "duration": 303.9509952068329,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1,
+                "mem_mb": 90
+            }
+        },
+        "results/global/branch_lengths.json": {
+            "start-time": "Thu Jul 16 09:29:33 2020",
+            "stop-time": "Thu Jul 16 09:34:37 2020",
+            "duration": 303.9509952068329,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1,
+                "mem_mb": 90
+            }
+        },
+        "results/global/traits.json": {
+            "start-time": "Thu Jul 16 09:34:37 2020",
+            "stop-time": "Thu Jul 16 09:34:53 2020",
+            "duration": 16.315478086471558,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/tip-frequencies.json": {
+            "start-time": "Thu Jul 16 09:34:37 2020",
+            "stop-time": "Thu Jul 16 09:34:44 2020",
+            "duration": 6.780134916305542,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/nt_muts.json": {
+            "start-time": "Thu Jul 16 09:34:37 2020",
+            "stop-time": "Thu Jul 16 09:34:57 2020",
+            "duration": 20.259793043136597,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/aa_muts.json": {
+            "start-time": "Thu Jul 16 09:34:57 2020",
+            "stop-time": "Thu Jul 16 09:35:08 2020",
+            "duration": 10.598905086517334,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/clades.json": {
+            "start-time": "Thu Jul 16 09:35:08 2020",
+            "stop-time": "Thu Jul 16 09:35:13 2020",
+            "duration": 5.384505748748779,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/ncov_with_accessions.json": {
+            "start-time": "Thu Jul 16 09:35:13 2020",
+            "stop-time": "Thu Jul 16 09:35:16 2020",
+            "duration": 2.9472649097442627,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "results/global/ncov_with_accessions_and_travel_branches.json": {
+            "start-time": "Thu Jul 16 09:35:16 2020",
+            "stop-time": "Thu Jul 16 09:35:17 2020",
+            "duration": 0.319166898727417,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "auspice/ncov_global.json": {
+            "start-time": "Thu Jul 16 09:35:17 2020",
+            "stop-time": "Thu Jul 16 09:35:17 2020",
+            "duration": 0.30632805824279785,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        },
+        "auspice/ncov_global_tip-frequencies.json": {
+            "start-time": "Thu Jul 16 09:35:17 2020",
+            "stop-time": "Thu Jul 16 09:35:17 2020",
+            "duration": 0.30632805824279785,
+            "priority": 0,
+            "resources": {
+                "_cores": 1,
+                "_nodes": 1
+            }
+        }
+    }
+}
