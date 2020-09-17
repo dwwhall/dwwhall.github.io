@@ -1,0 +1,10 @@
+Wuhan-Hu-1/2019
+Wuhan/WH01/2019
+tiger/USA/NY-040420/2020
+Germay/test/2020
+USA/test/2020
+USA/barcode05/2020
+USA/barcode06/2020
+USA/barcode07/2020
+USA/barcode18/2020
+USA/barcode19/2020
