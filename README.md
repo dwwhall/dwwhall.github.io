@@ -1,8 +1,16 @@
 ## About  
 
-This is a [Nextstrain](https://nextstrain.org) build for novel coronavirus, alternately known as hCoV-19 or SARS-CoV-2 that is responsible for the COVID-19 pandemic. This build is visible at [nextstrain.org/ncov](https://nextstrain.org/ncov).
+Nextstrain recommends developing the tutorial before running your own analysis. 
+Link to Zika Tutorial: https://nextstrain.org/docs/tutorials/zika
+
+
+This is a [Nextstrain](https://nextstrain.org) build for SARS-CoV-2.  The data was used to compare COVID-19 positive samples from Indiana to the global dataset.  The full build can be found at https://covid19-indiana.soic.iupui.edu/.  Note: Only 1 sample from Indiana was included in this GitHub repo.
+
 
 ### Data
+
+The example our data is 1 indiana Sample.  The Global data is NCBI viral sequneces provided from Nextstrain.  
+
 
 The hCoV-19 / SARS-CoV-2 genomes were generously shared via GISAID. We gratefully acknowledge the Authors, Originating and Submitting laboratories of the genetic sequence and metadata made available through GISAID on which this research is based.
 
@@ -40,4 +48,4 @@ If you're a lab and you'd like to get started sequencing, please see:
 * [Funding opportunities for sequencing efforts](https://twitter.com/firefoxx66/status/1242147905768751106)  
 * Or, if these don't meet your needs, [get in touch](mailto:hello@nextstrain.org)  
 # Indiana_ncov_Nextstrain
-# Indiana_ncov_Nextstrain
+
