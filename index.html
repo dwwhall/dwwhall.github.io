@@ -12,9 +12,13 @@
   var width = 1000;
   var height = 1000;
 
+
+
   var svg = d3.select("body").append("svg")
     .attr("width",width)
     .attr("height",height);
+
+
 
   var pumps = []
   d3.csv("pumps.csv",function(pump)
@@ -27,14 +31,42 @@
 
   var circles = svg.selectAll("circle").data(pumps).enter()
                   .append("circle")
-                  .style('stroke','red')
+                  .style('fill','blue')
                   .attr("cx",function(pump){ return width-pump[0]*scaleFactor;})
                   .attr("cy", function(pump){ return height-pump[1]*scaleFactor;})
-                  .attr("r","5px")
+                  .attr("r","10px")
                   .attr("red");
 
   });
 
+
+
+
+  var age_sex_death = []
+  d3.csv("deaths_age_sex.csv",function(asd)
+  {
+    for (var i = 0; i < asd.length; i++){
+      age_sex_death.push([asd[i].x,asd[i].y]);
+    }
+  
+  scaleFactor = 45
+
+  var asd_circles = svg.selectAll("circle").data(age_sex_death).enter()
+                  .append("circle")
+                  .style('stroke','orange')
+                  .style('fill','red')
+                  .attr("cx",function(asd){ return width-asd[0]*scaleFactor;})
+                  .attr("cy", function(asd){ return height-asd[1]*scaleFactor;})
+                 // .append("svg:title")
+                 // .text(function(asd) { return asd[2]; })
+                  .attr("r","5px")
+                  .attr("red");
+                  
+
+                });
+
+  //Reference for mouse over
+  //https://stackoverflow.com/questions/10805184/show-data-on-mouseover-of-circle
 
 
   //pumps generator
@@ -86,7 +118,7 @@
         .enter()
         .append("line")
         .attr("class", "street")
-        .style('stroke','blue')
+        .style('stroke','black')
         .style("stroke-width", 2)
         .attr("x1", function(d) { return width-parseFloat(d[0].x)*scaleFactor; })
         .attr("y1", function(d) { return height-parseFloat(d[0].y)*scaleFactor; })
@@ -97,6 +129,8 @@
 
 
 </script>
+
+
 
 </body>
 
