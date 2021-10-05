@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+
+
+
+<script>
+  var width = 1000;
+  var height = 1000;
+
+  var svg = d3.select("body").append("svg")
+    .attr("width",width)
+    .attr("height",height);
+
+  var pumps = []
+  d3.csv("pumps.csv",function(pump)
+  {
+    for (var i = 0; i < pump.length; i++){
+      pumps.push([pump[i].x,pump[i].y]);
+    }
+  
+  scaleFactor = 45
+
+  var circles = svg.selectAll("circle").data(pumps).enter()
+                  .append("circle")
+                  .style('stroke','red')
+                  .attr("cx",function(pump){ return width-pump[0]*scaleFactor;})
+                  .attr("cy", function(pump){ return height-pump[1]*scaleFactor;})
+                  .attr("r","5px")
+                  .attr("red");
+
+  });
+
+
+
+  //pumps generator
+  //
+  //scaleFactor = 35
+
+  //var pumpsGenerator = svg.selectAll(".p")
+    //    .data(pumps)
+     //   .enter()
+//        .append("circle")
+  //      .attr("cx",function(p)
+    //    {
+//          return width-parseFloat(p[0]*50)*scaleFactor;
+  //      })
+    //    .attr("cy", function(p)
+      //  {
+        //  return height-parseFloat(p[1]*50)*scaleFactor;
+//        })
+  //      .attr("r","2px")
+    //    .attr("blue","red");
+  
+
+  expand = function (points, newArray) {
+      if (points.length == 2) {
+    newArray.push(points);
+            }
+      else {
+    pointsArray = []
+    points.forEach(function(obj, idx) {
+        if ( idx + 1 < points.length ) {
+      pointsArray.push([points[idx],points[idx+1]])
+      newArray.push([points[idx],points[idx+1]])
+        }
+    });
+      }
+  };
+
+  d3.json("streets.json", function (streets) {
+  var streetProj = [];
+  streets.forEach(function(obj, idx) {
+  expand(obj, streetProj)
+        });
+
+  scaleFactor = 45
+
+  //var streetGenerator = svg.selectAll(".street")
+  var streetGenerator = svg.selectAll("street")
+        .data(streetProj)
+        .enter()
+        .append("line")
+        .attr("class", "street")
+        .style('stroke','blue')
+        .style("stroke-width", 2)
+        .attr("x1", function(d) { return width-parseFloat(d[0].x)*scaleFactor; })
+        .attr("y1", function(d) { return height-parseFloat(d[0].y)*scaleFactor; })
+        .attr("x2", function(d) { return width-parseFloat(d[1].x)*scaleFactor; })
+        .attr("y2", function(d) { return height-parseFloat(d[1].y)*scaleFactor; })
+    });
+  
+
+
+</script>
+
+</body>
+
+
+</html>
+
+
