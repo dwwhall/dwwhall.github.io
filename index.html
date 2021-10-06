@@ -6,15 +6,14 @@
 </head>
 <body>
 
+<div id="map_id"></div>
 
+<div id="timeline_id"></div>
 
 <script>
   var width = 1000;
   var height = 1000;
-
-
-
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#map_id").append("svg")
     .attr("width",width)
     .attr("height",height);
 
@@ -26,16 +25,34 @@
     for (var i = 0; i < pump.length; i++){
       pumps.push([pump[i].x,pump[i].y]);
     }
-  
+
   scaleFactor = 45
 
   var circles = svg.selectAll("circle").data(pumps).enter()
                   .append("circle")
+                  .attr('class', 'click-circle')
+                  .style('stroke','black')
                   .style('fill','blue')
                   .attr("cx",function(pump){ return width-pump[0]*scaleFactor;})
                   .attr("cy", function(pump){ return height-pump[1]*scaleFactor;})
                   .attr("r","10px")
-                  .attr("red");
+                  .attr('stroke-width',0)
+                    .on('mouseover',function() {
+                      d3.select(this)
+                      .transition()
+                      .duration(1000)
+                      .attr('stroke-width',5)
+                    })
+                    .on('mouseout',function () {
+                      d3.select(this)
+                      .transition()
+                      .duration(1000)
+          .            attr('stroke-width',0)
+                    })
+                    //Reference to thicken lines on mouse over
+                    //http://bl.ocks.org/jfreels/6811998
+
+              //    .attr("red");
 
   });
 
@@ -60,10 +77,46 @@
                  // .append("svg:title")
                  // .text(function(asd) { return asd[2]; })
                   .attr("r","5px")
-                  .attr("red");
+                  .attr('stroke-width',0)
+                    .on('mouseover',function(d,i) {
+                  //    console.log(d)
+                    //  .text(d.age)
+                      d3.select(this)
+                      .transition()
+                      .duration(1000)
+                      .attr('stroke-width',5)
+                    })
+                    .on('mouseout',function () {
+                      d3.select(this)
+                      .transition()
+                      .duration(1000)
+                      .attr('stroke-width',0)
+                    })
+                    //Reference to thicken lines on mouse over
+                    //http://bl.ocks.org/jfreels/6811998
+
+
+               //   .attr("red");
+                });
+
+//                  .on("mouseover", function(d) {    
+  //                  div.transition()    
+    //                  .duration(200)    
+      //                .style("opacity", .9);    
+        //            div .html(d[2] + "<br/>"  + d.close)  
+          //            .style("left", (d3.event.pageX) + "px")   
+            //          .style("top", (d3.event.pageY - 28) + "px");  
+              //        })          
+                //  .on("mouseout", function(d) {   
+ //                   div.transition()    
+   //                   .duration(500)    
+     //                 .style("opacity", 0);
+                      //mouse over reference
+                      //https://bl.ocks.org/d3noob/a22c42db65eb00d4e369 
+     //   });;
                   
 
-                });
+                
 
   //Reference for mouse over
   //https://stackoverflow.com/questions/10805184/show-data-on-mouseover-of-circle
@@ -125,15 +178,171 @@
         .attr("x2", function(d) { return width-parseFloat(d[1].x)*scaleFactor; })
         .attr("y2", function(d) { return height-parseFloat(d[1].y)*scaleFactor; })
     });
-  
 
 
 </script>
 
 
+//timeline_id
+//d3.csv("deathdays.csv",
 
+
+<style>
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: lightblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.tooltip {
+  position: absolute;
+  padding: 10px;
+  font: 12px sans-serif;
+  background: #222;
+  color: #fff;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.9;
+  visibility: hidden;
+}
+</style>
+
+
+<script>
+
+///////////////////////
+// Parse the Data
+d3.csv("deathdays.csv", function(data) {
+
+  ///////////////////////
+  // Chart Size Setup
+  var margin = { top: 35, right: 0, bottom: 30, left: 40 };
+
+  var width = 960 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
+
+  var chart = d3.select(".chart")
+      .attr("width", 960)
+      .attr("height", 500)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  ///////////////////////
+  // Scales
+  var x = d3.scale.ordinal()
+      .domain(data.map(function(d) { return d['date']; }))
+      .rangeRoundBands([0, width], .1);
+
+  var y = d3.scale.linear()
+      .domain([0, d3.max(data, function(d) { return d['deaths']; }) * 1.1])
+      .range([height, 0]);
+
+  ///////////////////////
+  // Axis
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
+
+  chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  ///////////////////////
+  // Title
+  chart.append("text")
+    .text('Bar Chart!')
+    .attr("text-anchor", "middle")
+    .attr("class", "graph-title")
+    .attr("y", -10)
+    .attr("x", width / 2.0);
+
+  ///////////////////////
+  // Bars
+  var bar = chart.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d['date']); })
+      .attr("y", height)
+      .attr("width", x.rangeBand())
+      .attr("height", 0);
+
+  bar.transition()
+      .duration(1500)
+      .ease("elastic")
+      .attr("y", function(d) { return y(d['deaths']); })
+      .attr("height", function(d) { return height - y(d['deaths']); })
+
+  ///////////////////////
+  // Tooltips
+  var tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip");
+
+  bar.on("mouseover", function(d) {
+        tooltip.html(d['value'])
+            .style("visibility", "visible");
+      })
+      .on("mousemove", function(d) {
+        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
+            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
+      })
+      .on("mouseout", function(d) {
+        tooltip.style("visibility", "hidden");
+      });
+});
+//Reference for bar chart of death days
+//Kate Pham
+//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
+
+</script>
+
+
+  <svg class="chart"></svg>
 </body>
 
+
+<script>
+//barchart references
+//https://www.d3-graph-gallery.com/graph/density_basic.html
+//https://www.kdnuggets.com/2018/03/simple-bar-chart-d3.html
+//https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
+//https://bl.ocks.org/d3noob/8952219
+
+  // console.log(data);
+
+
+
+//time format
+  //https://github.com/d3/d3-time-format
+
+</script>
 
 </html>
 
