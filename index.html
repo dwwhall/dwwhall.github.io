@@ -3,14 +3,53 @@
 <html>
 <head>
     <script src="https://d3js.org/d3.v3.min.js"></script>
+
+<style>
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: lightblue;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.tooltip {
+  position: absolute;
+  padding: 10px;
+  font: 12px sans-serif;
+  background: #222;
+  color: #fff;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.9;
+  visibility: hidden;
+}
+</style>
 </head>
 <body>
 
+<p> John Snow's Cholera Map </p>
 <div id="map_id"></div>
 
-<div id="timeline_id"></div>
 
 <script>
+
   var width = 1000;
   var height = 1000;
   var svg = d3.select("#map_id").append("svg")
@@ -64,9 +103,18 @@
   {
     for (var i = 0; i < asd.length; i++){
       age_sex_death.push([asd[i].x,asd[i].y]);
+
     }
+    
+ //   for (var i=1; i<=asd.length; i++){
+   //   age_sex_death.push(asd[i].id)
+  //  } 
   
   scaleFactor = 45
+
+
+//Reference For guid function which assigns random & unique ID to every circle
+//https://stackoverflow.com/questions/31381129/assign-new-id-attribute-to-each-element-created
 
   var asd_circles = svg.selectAll("circle").data(age_sex_death).enter()
                   .append("circle")
@@ -74,6 +122,9 @@
                   .style('fill','red')
                   .attr("cx",function(asd){ return width-asd[0]*scaleFactor;})
                   .attr("cy", function(asd){ return height-asd[1]*scaleFactor;})
+                  .attr("id", function(asd,i) { return i; })
+               //   .attr("id", function(asd){ return 'deaths_' + asd[2];})
+               //   .attr("id",guid())
                  // .append("svg:title")
                  // .text(function(asd) { return asd[2]; })
                   .attr("r","5px")
@@ -95,9 +146,9 @@
                     //Reference to thicken lines on mouse over
                     //http://bl.ocks.org/jfreels/6811998
 
-
                //   .attr("red");
                 });
+
 
 //                  .on("mouseover", function(d) {    
   //                  div.transition()    
@@ -180,82 +231,46 @@
     });
 
 
-</script>
 
 
-//timeline_id
-//d3.csv("deathdays.csv",
 
 
-<style>
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: lightblue;
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.tooltip {
-  position: absolute;
-  padding: 10px;
-  font: 12px sans-serif;
-  background: #222;
-  color: #fff;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-  opacity: 0.9;
-  visibility: hidden;
-}
-</style>
 
 
-<script>
 
-///////////////////////
+//Reference for bar chart style
+//Kate Pham
+//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
+
 // Parse the Data
 d3.csv("deathdays.csv", function(data) {
 
-  ///////////////////////
-  // Chart Size Setup
-  var margin = { top: 35, right: 0, bottom: 30, left: 40 };
 
-  var width = 960 - margin.left - margin.right;
+  // Chart Size Setup
+  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
+
+  var width = 2000 - margin.left - margin.right;
   var height = 500 - margin.top - margin.bottom;
 
   var chart = d3.select(".chart")
-      .attr("width", 960)
+      .attr("width", 2000)
       .attr("height", 500)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  ///////////////////////
+
   // Scales
   var x = d3.scale.ordinal()
       .domain(data.map(function(d) { return d['date']; }))
       .rangeRoundBands([0, width], .1);
 
   var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return d['deaths']; }) * 1.1])
+      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
+   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
       .range([height, 0]);
 
-  ///////////////////////
+
+
   // Axis
   var xAxis = d3.svg.axis()
       .scale(x)
@@ -274,16 +289,16 @@ d3.csv("deathdays.csv", function(data) {
       .attr("class", "y axis")
       .call(yAxis);
 
-  ///////////////////////
+
   // Title
   chart.append("text")
-    .text('Bar Chart!')
+ //   .text('Timeline Death Count')
     .attr("text-anchor", "middle")
     .attr("class", "graph-title")
     .attr("y", -10)
     .attr("x", width / 2.0);
 
-  ///////////////////////
+
   // Bars
   var bar = chart.selectAll(".bar")
       .data(data)
@@ -300,14 +315,17 @@ d3.csv("deathdays.csv", function(data) {
       .attr("y", function(d) { return y(d['deaths']); })
       .attr("height", function(d) { return height - y(d['deaths']); })
 
-  ///////////////////////
+
+
   // Tooltips
   var tooltip = d3.select("body").append("div")
       .attr("class", "tooltip");
+  
 
   bar.on("mouseover", function(d) {
         tooltip.html(d['value'])
             .style("visibility", "visible");
+
       })
       .on("mousemove", function(d) {
         tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
@@ -316,6 +334,8 @@ d3.csv("deathdays.csv", function(data) {
       .on("mouseout", function(d) {
         tooltip.style("visibility", "hidden");
       });
+
+
 });
 //Reference for bar chart of death days
 //Kate Pham
@@ -323,8 +343,11 @@ d3.csv("deathdays.csv", function(data) {
 
 </script>
 
+<p> Timeline and Death Count </p>
 
   <svg class="chart"></svg>
+  <div class="chart"></div>
+
 </body>
 
 
