@@ -102,19 +102,131 @@
                 shape-rendering: crispEdges;
             }
 
+/* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clear floats after image containers */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  cursor: pointer;
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.show {
+  display: block;
+}
+p {text-align: center;}
+div {text-align: center;}
+svg {text-align: center;}
 </style>
 </head>
+
+
+
 <body>
+
+<!-- dropdown code made in w3schools -->
+
+<div class="navbar">
+  <a href="index.html">Home</a>
+    <div class="dropdown">
+  </div> 
+  <a href="doc.html">Documentation</a>
+  <a href="about.html">About</a>
+
+  
+  
+  </div> 
+</div>
+<script>
+//W3schools function for dropdown
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
 
 
 <p> John Snow's Cholera Map </p>
 <div id="map_id"></div>
+<p> Red circles = Deaths; Blue circles = Pumps </p>
 
 <p> Timeline and Death Count </p>
 <svg class="chart"></svg> 
 
-
-<p> Red circles = Deaths; Blue circles = Pumps </p>
 
 <p> Ages Death Count </p>
 <svg class="chart1"></svg>
@@ -127,125 +239,7 @@
 <p> 284 Males and 287 Females (Almost 50/50) </p>
 
 
-<script>
-//Calculated with Excel
-//0-10 0
-//11-20 48
-//21-40 116
-//41-60 171
-//61-80 364
-//>80 870
-d3.csv("age_death_counts.csv", function(data) {
 
-
-  // Chart Size Setup
-  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
-
-  var width = 1000 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
-
-  var chart = d3.select(".chart1")
-      .attr("width", 2000)
-      .attr("height", 500)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  // Scales
-  var x = d3.scale.ordinal()
-      .domain(data.map(function(d) { return d['age']; }))
-      .rangeRoundBands([0, width], .1);
-
-  var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
-   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
-      .range([height, 0]);
-
-
-
-  // Axis
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  chart.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  chart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-
-  // Title
-  chart.append("text")
- //   .text('Timeline Death Count')
-    .attr("text-anchor", "middle")
-    .attr("class", "graph-title")
-    .attr("y", -10)
-    .attr("x", width / 2.0);
-
-
-  // Bars
-  var bar = chart.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d['age']); })
-      .attr("y", height)
-      .attr("width", x.rangeBand())
-      .attr("height", 0);
-
-  bar.transition()
-      .duration(1500)
-      .ease("elastic")
-      .attr("y", function(d) { return y(d['deaths']); })
-      .attr("height", function(d) { return height - y(d['deaths']); })
-
-
-
-  // Tooltips
-  var tooltip = d3.select("body").append("div")
-      .attr("class", "tooltip");
-  
-  var map_tooltip = d3.select("#map_id")
-      .append("div")
-      .attr("class", "tooltip2");
-  
-
-  bar.on("mouseover", function(d) {
-        tooltip.html(d['value'])
-            .style("visibility", "visible");
-
-      })
- //     .on("mouseover", function(d){
-   //     map_tooltip.html(d['id'])
-     //     .style("visibility", "visible");
-   //   })
-     //   console.log(d['deaths']);
-      .on("mousemove", function(d) {
-        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
-            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
-      })
-      .on("mouseout", function(d) {
-        tooltip.style("visibility", "hidden");
-      });
-
-
-});
-
-//Reference for bar chart of gender count
-//Kate Pham
-//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
-
-
-
-</script>
 <script>
 
 //Gender Death Counts was calculated with Excel
@@ -557,7 +551,7 @@ d3.csv("deathdays.csv", function(data) {
 
   var margin = { top: 55, right: 150, bottom: 40, left: 50 };
 
-  var width = 1000 - margin.left - margin.right;
+  var width = 2000 - margin.left - margin.right;
   var height = 500 - margin.top - margin.bottom;
 
   var chart = d3.select(".chart")
@@ -658,6 +652,126 @@ d3.csv("deathdays.csv", function(data) {
 //Kate Pham
 //https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
 
+
+
+
+</script>
+
+<script>
+//Calculated with Excel
+//0-10 0
+//11-20 48
+//21-40 116
+//41-60 171
+//61-80 364
+//>80 870
+d3.csv("age_death_counts.csv", function(data) {
+
+
+  // Chart Size Setup
+  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
+
+  var width = 1000 - margin.left - margin.right;
+  var height = 500 - margin.top - margin.bottom;
+
+  var chart = d3.select(".chart1")
+      .attr("width", 2000)
+      .attr("height", 500)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  // Scales
+  var x = d3.scale.ordinal()
+      .domain(data.map(function(d) { return d['age']; }))
+      .rangeRoundBands([0, width], .1);
+
+  var y = d3.scale.linear()
+      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
+   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
+      .range([height, 0]);
+
+
+
+  // Axis
+  var xAxis = d3.svg.axis()
+      .scale(x)
+      .orient("bottom");
+
+  var yAxis = d3.svg.axis()
+      .scale(y)
+      .orient("left");
+
+  chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+
+  // Title
+  chart.append("text")
+ //   .text('Timeline Death Count')
+    .attr("text-anchor", "middle")
+    .attr("class", "graph-title")
+    .attr("y", -10)
+    .attr("x", width / 2.0);
+
+
+  // Bars
+  var bar = chart.selectAll(".bar")
+      .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d['age']); })
+      .attr("y", height)
+      .attr("width", x.rangeBand())
+      .attr("height", 0);
+
+  bar.transition()
+      .duration(1500)
+      .ease("elastic")
+      .attr("y", function(d) { return y(d['deaths']); })
+      .attr("height", function(d) { return height - y(d['deaths']); })
+
+
+
+  // Tooltips
+  var tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip");
+  
+  var map_tooltip = d3.select("#map_id")
+      .append("div")
+      .attr("class", "tooltip2");
+  
+
+  bar.on("mouseover", function(d) {
+        tooltip.html(d['value'])
+            .style("visibility", "visible");
+
+      })
+ //     .on("mouseover", function(d){
+   //     map_tooltip.html(d['id'])
+     //     .style("visibility", "visible");
+   //   })
+     //   console.log(d['deaths']);
+      .on("mousemove", function(d) {
+        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
+            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
+      })
+      .on("mouseout", function(d) {
+        tooltip.style("visibility", "hidden");
+      });
+
+
+});
+
+//Reference for bar chart of gender count
+//Kate Pham
+//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
 
 
 
