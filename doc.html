@@ -84,6 +84,19 @@
 .show {
   display: block;
 }
+
+h1 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+img {text-align: center;}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 </style>
 
 <body>
@@ -122,5 +135,29 @@ window.onclick = function(e) {
 </script>
 
     <h1>Documentation</h1>
+
+
+<center> <iframe width="560" height="315" src="https://www.youtube.com/embed/cdLtEj0dy5s" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> </center>
+
+<p><h1> Intial Design </h1></p>
+
+<img src = "Sketch.png" width="500" height="600" class="center">
+
+<p><h1> Rationale </h1></p>
+<p>I wanted the map to be the first thing people saw when they entered the website.  All supplementary graphs to be below because I felt like the scatterplot of deaths and pumps on the Cholera map was the most important.  Each following graph is ordered in importance according to my opinion.  </p>   
+
+<p><h1> Bugs in the system</h1></p>
+<p>The map is not connected to the timeline.  I tried to set up an id for each death point on the map, and I tried to connect the timeline to each id.  This approach was demonstrated in class, but I feel like this was not going to work for my datafiles.  If I was going to try again, then I would try to connect the graphs through date.  </p>
+
+<p><h1> Observations </h1></p>
+<img src = "center_pump.png" width="500" height="600" class="center">
+<p>From my visualization, the center pump is located near the most deaths, so this is probably one of the sources of Cholera. </p>
+<img src = "gender.png" width="500" height="600" class="center">
+<p>The gender does not play a factor because it is almost a 50/50 split for deaths of males and females. </p>
+
+
+
+
+
 </body>
 </html>
