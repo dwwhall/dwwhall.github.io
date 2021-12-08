@@ -1,849 +1,203 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-    <script src="https://d3js.org/d3.v3.min.js"></script>
-
-<style>
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: lightblue;
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.x.axis path {
-  display: none;
-}
-
-.tooltip {
-  position: absolute;
-  padding: 10px;
-  font: 12px sans-serif;
-  background: #222;
-  color: #fff;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-  opacity: 0.9;
-  visibility: hidden;
-}
-
-.tooltip2 {
-  position: absolute;
-  padding: 10px;
-  font: 12px sans-serif;
-  background: #222;
-  color: #fff;
-  border: 0px;
-  border-radius: 8px;
-  pointer-events: none;
-  opacity: 0.9;
-  visibility: hidden;
-}
-
-           svg {
-                font: 10px sans-serif;
+<html lang="en"></html>
+    <head>
+        <title>LOL analysis</title>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <style>
+            * {box-sizing: border-box;}
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, san-serif;
             }
-
-            .vis-title {
-                font: 14px sans-serif;
-                font-weight: bold;
-                fill: #777;
+            .topnav {
+                overflow: hidden;
+                background-color: #e9e9e9;
             }
-
-            .boroughs {
-                fill: rgb(222,235,247);
-                stroke: #000;
-                stroke-width: 0.5px;
+            .topnav a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
             }
-
-            .tooltip3 {
-                position: absolute;
-                font-size: 12px;
-                width:  auto;
-                height: auto;
-                pointer-events: none;
-                background-color: white;
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
             }
-
-            .circle-hover {
-                stroke: #000;
-                stroke-width: 1px;
-            }
-
-            .area {
-                fill: steelblue;
-                fill-opacity: 0.7;
-            }
-            .axis path,
-            .axis line {
-                fill: none;
-                stroke: #000;
-                shape-rendering: crispEdges;
-            }
-
-            .brush .extent {
-                stroke: #fff;
-                fill: #000;
-                fill-opacity: .25;
-                shape-rendering: crispEdges;
-            }
-
-/* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 5px;
-}
-
-/* Clear floats after image containers */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-.navbar {
-  overflow: hidden;
-  background-color: #333;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.navbar a {
-  float: left;
-  font-size: 16px;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-
-.dropdown {
-  float: left;
-  overflow: hidden;
-}
-
-.dropdown .dropbtn {
-  cursor: pointer;
-  font-size: 16px;  
-  border: none;
-  outline: none;
-  color: white;
-  padding: 14px 16px;
-  background-color: inherit;
-  font-family: inherit;
-  margin: 0;
-}
-
-.navbar a:hover, .dropdown:hover .dropbtn, .dropbtn:focus {
-  background-color: red;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content a {
-  float: none;
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-}
-
-.dropdown-content a:hover {
-  background-color: #ddd;
-}
-
-.show {
-  display: block;
-}
-p {text-align: center;}
-div {text-align: center;}
-svg {text-align: center;}
-</style>
-</head>
-
-
-
-<body>
-
-<!-- dropdown code made in w3schools -->
-
-<div class="navbar">
-  <a href="index.html">Home</a>
-    <div class="dropdown">
-  </div> 
-  <a href="doc.html">Documentation</a>
-  <a href="about.html">About</a>
-
-  
-  
-  </div> 
-</div>
-<script>
-//W3schools function for dropdown
-
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
-    }
-  }
-}
-</script>
-
-    <p> (Please hit refresh if circles are not appearing on the map) </p>
-<p> John Snow's Cholera Map </p>
-<div id="map_id"></div>
-<p> Red circles = Deaths; Blue circles = Pumps </p>
-
-<p> Timeline and Death Count </p>
-<svg class="chart"></svg> 
-
-
-<p> Ages Death Count </p>
-<svg class="chart1"></svg>
-
-<!-- <p> Gender Death Count </p> 
-<svg class="chart2"></svg> -->
-
-<p> Gender Pie Chart </p>
-<div id="pie-chart"></div>
-<p> 284 Males and 287 Females (Almost 50/50) </p>
-
-
-
-<script>
-
-//Gender Death Counts was calculated with Excel
-
-d3.csv("gender_death_count.csv", function(data) {
-
-
-  // Chart Size Setup
-  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
-
-  var width = 1000 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
-
-  var chart = d3.select(".chart2")
-      .attr("width", 2000)
-      .attr("height", 500)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  // Scales
-  var x = d3.scale.ordinal()
-      .domain(data.map(function(d) { return d['gender']; }))
-      .rangeRoundBands([0, width], .1);
-
-  var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
-   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
-      .range([height, 0]);
-
-
-
-  // Axis
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  chart.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  chart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-
-  // Title
-  chart.append("text")
- //   .text('Timeline Death Count')
-    .attr("text-anchor", "middle")
-    .attr("class", "graph-title")
-    .attr("y", -10)
-    .attr("x", width / 2.0);
-
-
-  // Bars
-  var bar = chart.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d['gender']); })
-      .attr("y", height)
-      .attr("width", x.rangeBand())
-      .attr("height", 0);
-
-  bar.transition()
-      .duration(1500)
-      .ease("elastic")
-      .attr("y", function(d) { return y(d['deaths']); })
-      .attr("height", function(d) { return height - y(d['deaths']); })
-
-
-
-  // Tooltips
-  var tooltip = d3.select("body").append("div")
-      .attr("class", "tooltip");
-  
-  var map_tooltip = d3.select("#map_id")
-      .append("div")
-      .attr("class", "tooltip2");
-  
-
-  bar.on("mouseover", function(d) {
-        tooltip.html(d['value'])
-            .style("visibility", "visible");
-
-      })
- //     .on("mouseover", function(d){
-   //     map_tooltip.html(d['id'])
-     //     .style("visibility", "visible");
-   //   })
-     //   console.log(d['deaths']);
-      .on("mousemove", function(d) {
-        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
-            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
-      })
-      .on("mouseout", function(d) {
-        tooltip.style("visibility", "hidden");
-      });
-
-
-});
-
-//Reference for bar chart of gender count
-//Kate Pham
-//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
-
-
-
-</script>
-
-<script>
-
-  var width = 900;
-  var height = 900;
-  var svg = d3.select("#map_id").append("svg")
-    .attr("width",width)
-    .attr("height",height);
-
-
-
-  var pumps = []
-  d3.csv("pumps.csv",function(pump)
-  {
-    for (var i = 0; i < pump.length; i++){
-      pumps.push([pump[i].x,pump[i].y]);
-    }
-
-  scaleFactor = 35
-
-  var circles = svg.selectAll("circle").data(pumps).enter()
-                  .append("circle")
-                  .attr('class', 'click-circle')
-                  .style('stroke','black')
-                  .style('fill','blue')
-                  .attr("cx",function(pump){ return width-pump[0]*scaleFactor;})
-                  .attr("cy", function(pump){ return height-pump[1]*scaleFactor;})
-                  .attr("r","10px")
-                  .attr('stroke-width',0)
-                    .on('mouseover',function() {
-                      d3.select(this)
-                      .transition()
-                      .duration(1000)
-                      .attr('stroke-width',5)
-                    })
-                    .on('mouseout',function () {
-                      d3.select(this)
-                      .transition()
-                      .duration(1000)
-          .            attr('stroke-width',0)
-                    })
-                    //Reference to thicken lines on mouse over
-                    //http://bl.ocks.org/jfreels/6811998
-
-              //    .attr("red");
-
-  });
-
-
-
-
-  var age_sex_death = []
-  d3.csv("deaths_age_sex.csv",function(asd)
-  {
-    for (var i = 0; i < asd.length; i++){
-      age_sex_death.push([asd[i].x,asd[i].y]);
-
-    }
-    
- //   for (var i=1; i<=asd.length; i++){
-   //   age_sex_death.push(asd[i].id)
-  //  } 
-  
-//  scaleFactor = 45
-
-
-//Reference For guid function which assigns random & unique ID to every circle
-//https://stackoverflow.com/questions/31381129/assign-new-id-attribute-to-each-element-created
-
-  var asd_circles = svg.selectAll("circle").data(age_sex_death).enter()
-                  .append("circle")
-                  .style('stroke','orange')
-                  .style('fill','red')
-                  .attr("cx",function(asd){ return width-asd[0]*scaleFactor;})
-                  .attr("cy", function(asd){ return height-asd[1]*scaleFactor;})
-                  .attr("id", function(asd,i) { return i; })
-
-               //   .attr("id", function(asd){ return 'deaths_' + asd[2];})
-               //   .attr("id",guid())
-                 // .append("svg:title")
-                 // .text(function(asd) { return asd[2]; })
-                  .attr("r","5px")
-                  .attr('stroke-width',0)
-                    .on('mouseover',function(d,i) {
-                   //   console.log(d,i)
-                    //  .text(d.age)
-                      d3.select(this)
-                      .transition()
-                      .duration(1000)
-                      .attr('stroke-width',5)
-                    })
-                    .on('mouseout',function () {
-                      d3.select(this)
-                      .transition()
-                      .duration(1000)
-                      .attr('stroke-width',0)
-                    })
-                    //Reference to thicken lines on mouse over
-                    //http://bl.ocks.org/jfreels/6811998
-
-               //   .attr("red");
-                });
-
-
-//                  .on("mouseover", function(d) {    
-  //                  div.transition()    
-    //                  .duration(200)    
-      //                .style("opacity", .9);    
-        //            div .html(d[2] + "<br/>"  + d.close)  
-          //            .style("left", (d3.event.pageX) + "px")   
-            //          .style("top", (d3.event.pageY - 28) + "px");  
-              //        })          
-                //  .on("mouseout", function(d) {   
- //                   div.transition()    
-   //                   .duration(500)    
-     //                 .style("opacity", 0);
-                      //mouse over reference
-                      //https://bl.ocks.org/d3noob/a22c42db65eb00d4e369 
-     //   });;
-                  
-
-                
-
-  //Reference for mouse over
-  //https://stackoverflow.com/questions/10805184/show-data-on-mouseover-of-circle
-
-
-  //pumps generator
-  //
-  //scaleFactor = 35
-
-  //var pumpsGenerator = svg.selectAll(".p")
-    //    .data(pumps)
-     //   .enter()
-//        .append("circle")
-  //      .attr("cx",function(p)
-    //    {
-//          return width-parseFloat(p[0]*50)*scaleFactor;
-  //      })
-    //    .attr("cy", function(p)
-      //  {
-        //  return height-parseFloat(p[1]*50)*scaleFactor;
-//        })
-  //      .attr("r","2px")
-    //    .attr("blue","red");
-  
-
-  expand = function (points, newArray) {
-      if (points.length == 2) {
-    newArray.push(points);
-            }
-      else {
-    pointsArray = []
-    points.forEach(function(obj, idx) {
-        if ( idx + 1 < points.length ) {
-      pointsArray.push([points[idx],points[idx+1]])
-      newArray.push([points[idx],points[idx+1]])
-        }
-    });
-      }
-  };
-
-  d3.json("streets.json", function (streets) {
-  var streetProj = [];
-  streets.forEach(function(obj, idx) {
-  expand(obj, streetProj)
-        });
-
-//  scaleFactor = 45
-
-  //var streetGenerator = svg.selectAll(".street")
-  var streetGenerator = svg.selectAll("street")
-        .data(streetProj)
-        .enter()
-        .append("line")
-        .attr("class", "street")
-        .style('stroke','black')
-        .style("stroke-width", 2)
-        .attr("x1", function(d) { return width-parseFloat(d[0].x)*scaleFactor; })
-        .attr("y1", function(d) { return height-parseFloat(d[0].y)*scaleFactor; })
-        .attr("x2", function(d) { return width-parseFloat(d[1].x)*scaleFactor; })
-        .attr("y2", function(d) { return height-parseFloat(d[1].y)*scaleFactor; })
-    });
-
-///////////////////////////////////////////////////////////////////////
-
-//Reference for bar chart style
-//Kate Pham
-//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
-
-
-d3.csv("deathdays.csv", function(data) {
-
-
-  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
-
-  var width = 2000 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
-
-  var chart = d3.select(".chart")
-      .attr("width", 2000)
-      .attr("height", 500)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  // Scales
-  var x = d3.scale.ordinal()
-      .domain(data.map(function(d) { return d['date']; }))
-      .rangeRoundBands([0, width], .1);
-
-  var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
-   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
-      .range([height, 0]);
-
-
-
-  // Axis
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  chart.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  chart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-
-  // Title
-  chart.append("text")
- //   .text('Timeline Death Count')
-    .attr("text-anchor", "middle")
-    .attr("class", "graph-title")
-    .attr("y", -10)
-    .attr("x", width / 2.0);
-
-
-  // Bars
-  var bar = chart.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d['date']); })
-      .attr("y", height)
-      .attr("width", x.rangeBand())
-      .attr("height", 0);
-
-  bar.transition()
-      .duration(1500)
-      .ease("elastic")
-      .attr("y", function(d) { return y(d['deaths']); })
-      .attr("height", function(d) { return height - y(d['deaths']); })
-
-
-
-  // Tooltips
-  var tooltip = d3.select("body").append("div")
-      .attr("class", "tooltip");
-  
-  var map_tooltip = d3.select("#map_id")
-      .append("div")
-      .attr("class", "tooltip2");
-  
-
-  bar.on("mouseover", function(d) {
-        tooltip.html(d['value'])
-            .style("visibility", "visible");
-
-      })
- //     .on("mouseover", function(d){
-   //     map_tooltip.html(d['id'])
-     //     .style("visibility", "visible");
-   //   })
-     //   console.log(d['deaths']);
-      .on("mousemove", function(d) {
-        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
-            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
-      })
-      .on("mouseout", function(d) {
-        tooltip.style("visibility", "hidden");
-      });
-
-
-});
-//Reference for bar chart of death days
-//Kate Pham
-//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
-
-
-
-
-</script>
-
-<script>
-//Calculated with Excel
-//0-10 0
-//11-20 48
-//21-40 116
-//41-60 171
-//61-80 364
-//>80 870
-d3.csv("age_death_counts.csv", function(data) {
-
-
-  // Chart Size Setup
-  var margin = { top: 55, right: 150, bottom: 40, left: 50 };
-
-  var width = 1000 - margin.left - margin.right;
-  var height = 500 - margin.top - margin.bottom;
-
-  var chart = d3.select(".chart1")
-      .attr("width", 2000)
-      .attr("height", 500)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-  // Scales
-  var x = d3.scale.ordinal()
-      .domain(data.map(function(d) { return d['age']; }))
-      .rangeRoundBands([0, width], .1);
-
-  var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) { return parseFloat(d['deaths']); }) * 1.1])
-   //   .domain([0, d3.max(data, function(d) { return d['deaths']; })])
-      .range([height, 0]);
-
-
-
-  // Axis
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  chart.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis);
-
-  chart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis);
-
-
-  // Title
-  chart.append("text")
- //   .text('Timeline Death Count')
-    .attr("text-anchor", "middle")
-    .attr("class", "graph-title")
-    .attr("y", -10)
-    .attr("x", width / 2.0);
-
-
-  // Bars
-  var bar = chart.selectAll(".bar")
-      .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) { return x(d['age']); })
-      .attr("y", height)
-      .attr("width", x.rangeBand())
-      .attr("height", 0);
-
-  bar.transition()
-      .duration(1500)
-      .ease("elastic")
-      .attr("y", function(d) { return y(d['deaths']); })
-      .attr("height", function(d) { return height - y(d['deaths']); })
-
-
-
-  // Tooltips
-  var tooltip = d3.select("body").append("div")
-      .attr("class", "tooltip");
-  
-  var map_tooltip = d3.select("#map_id")
-      .append("div")
-      .attr("class", "tooltip2");
-  
-
-  bar.on("mouseover", function(d) {
-        tooltip.html(d['value'])
-            .style("visibility", "visible");
-
-      })
- //     .on("mouseover", function(d){
-   //     map_tooltip.html(d['id'])
-     //     .style("visibility", "visible");
-   //   })
-     //   console.log(d['deaths']);
-      .on("mousemove", function(d) {
-        tooltip.style("top", event.pageY - (tooltip[0][0].clientHeight + 5) + "px")
-            .style("left", event.pageX - (tooltip[0][0].clientWidth / 2.0) + "px");
-      })
-      .on("mouseout", function(d) {
-        tooltip.style("visibility", "hidden");
-      });
-
-
-});
-
-//Reference for bar chart of gender count
-//Kate Pham
-//https://bl.ocks.org/tpham27/37d682cc63fc29da314c6d28417fce3f
-
-
-
-</script>
-
-<script>
-var w = 400;
-var h = 400;
-var r = h/2;
-var aColor = [
-    'rgb(178, 55, 56)',
-    'rgb(102, 102, 255)'
-]
-
-//Values Calculated in Excel
-//This method was easier than pulling data from the file
-
-var data = [
-    {"label":"Male", "value":284}, 
-    {"label": "Female", "value":287}
-];
-
-
-var vis = d3.select('#pie-chart').append("svg:svg").data([data]).attr("width", w).attr("height", h).append("svg:g").attr("transform", "translate(" + r + "," + r + ")");
-
-var pie = d3.layout.pie().value(function(d){return d.value;});
-
-// Declare an arc generator function
-var arc = d3.svg.arc().outerRadius(r);
-
-// Select paths, use arc generator to draw
-var arcs = vis.selectAll("g.slice").data(pie).enter().append("svg:g").attr("class", "slice");
-arcs.append("svg:path")
-    .attr("fill", function(d, i){return aColor[i];})
-    .attr("d", function (d) {return arc(d);})
-;
-
-// Add the text
-arcs.append("svg:text")
-    .attr("transform", function(d){
-        d.innerRadius = 100; /* Distance of label to the center*/
-        d.outerRadius = r;
-        return "translate(" + arc.centroid(d) + ")";}
-    )
-    .attr("text-anchor", "middle")
-    .text( function(d, i) {return data[i].label + " " + data[i].value;})
-;
-
-//Pie Chart Reference
-//https://gist.github.com/Potherca/b9f8b3d0a24e0b20f16d
-</script>
-
-
-</body>
-
-
-<script>
-//barchart references
-//https://www.d3-graph-gallery.com/graph/density_basic.html
-//https://www.kdnuggets.com/2018/03/simple-bar-chart-d3.html
-//https://www.tutorialsteacher.com/d3js/create-bar-chart-using-d3js
-//https://bl.ocks.org/d3noob/8952219
-
-  // console.log(data);
-
-
-
-//time format
-  //https://github.com/d3/d3-time-format
-
-</script>
-
+        </style>
+    </head>
+    <body>
+        <div class="topnav">
+            <a href="index.html">Home</a>
+            <a href="About.html">About</a>
+        </div>
+        <script>
+            d3.json("champion.json", function(data){
+                console.log("data");
+            })
+        </script>
+        <div class = "row">
+            <div class="column">
+                <img src ="./champions/Aatrox.png" style="width: 3%">
+                <img src ="./champions/Ahri.png" style="width: 3%">
+                <img src ="./champions/Akali.png" style="width: 3%">
+                <img src ="./champions/Akshan.png" style="width: 3%">
+                <img src ="./champions/Alistar.png" style="width: 3%">
+                <img src ="./champions/Amumu.png" style="width: 3%">
+                <img src ="./champions/Anivia.png" style="width: 3%">
+                <img src ="./champions/Annie.png" style="width: 3%">
+                <img src ="./champions/Aphelios.png" style="width: 3%">
+                <img src ="./champions/Ashe.png" style="width: 3%">
+                <img src ="./champions/AurelionSol.png" style="width: 3%">
+                <img src ="./champions/Azir.png" style="width: 3%">
+                <img src ="./champions/Bard.png" style="width: 3%">                
+                <img src ="./champions/Blitzcrank.png" style="width: 3%"><br>
+                <img src ="./champions/Brand.png" style="width: 3%">
+                <img src ="./champions/Braum.png" style="width: 3%">
+                <img src ="./champions/Caitlyn.png" style="width: 3%"> 
+                <img src ="./champions/Camille.png" style="width: 3%">
+                <img src ="./champions/Cassiopeia.png" style="width: 3%">
+                <img src ="./champions/Chogath.png" style="width: 3%">
+                <img src ="./champions/Corki.png" style="width: 3%">
+                <img src ="./champions/Darius.png" style="width: 3%">
+                <img src ="./champions/Diana.png" style="width: 3%">
+                <img src ="./champions/Draven.png" style="width: 3%">
+                <img src ="./champions/DrMundo.png" style="width: 3%">
+                <img src ="./champions/Ekko.png" style="width: 3%">
+                <img src ="./champions/Elise.png" style="width: 3%">
+                <img src ="./champions/Evelynn.png" style="width: 3%"><br>
+                <img src ="./champions/Ezreal.png" style="width: 3%">
+                <img src ="./champions/Fiddlesticks.png" style="width: 3%">
+                <img src ="./champions/Fiora.png" style="width: 3%">
+                <img src ="./champions/Fizz.png" style="width: 3%">
+                <img src ="./champions/Galio.png" style="width: 3%">
+                <img src ="./champions/Gangplank.png" style="width: 3%">
+                <img src ="./champions/Garen.png" style="width: 3%">
+                <img src ="./champions/Gnar.png" style="width: 3%">
+                <img src ="./champions/Gragas.png" style="width: 3%">
+                <img src ="./champions/Graves.png" style="width: 3%">
+                <img src ="./champions/Gwen.png" style="width: 3%">
+                <img src ="./champions/Hecarim.png" style="width: 3%">
+                <img src ="./champions/Heimerdinger.png" style="width: 3%">
+                <img src ="./champions/Illaoi.png" style="width: 3%"><br>
+                <img src ="./champions/Irelia.png" style="width: 3%">
+                <img src ="./champions/Ivern.png" style="width: 3%">
+                <img src ="./champions/Janna.png" style="width: 3%">
+                <img src ="./champions/JarvanIV.png" style="width: 3%">
+                <img src ="./champions/Jax.png" style="width: 3%">
+                <img src ="./champions/Jayce.png" style="width: 3%">
+                <img src ="./champions/Jhin.png" style="width: 3%">
+                <img src ="./champions/Jinx.png" style="width: 3%">
+                <img src ="./champions/Kaisa.png" style="width: 3%">
+                <img src ="./champions/Kalista.png" style="width: 3%">
+                <img src ="./champions/Karma.png" style="width: 3%">
+                <img src ="./champions/Karthus.png" style="width: 3%">
+                <img src ="./champions/Kassadin.png" style="width: 3%">
+                <img src ="./champions/Katarina.png" style="width: 3%"><br>
+                <img src ="./champions/Kayle.png" style="width: 3%">
+                <img src ="./champions/Kayn.png" style="width: 3%">
+                <img src ="./champions/Kennen.png" style="width: 3%">
+                <img src ="./champions/Khazix.png" style="width: 3%">
+                <img src ="./champions/Kindred.png" style="width: 3%">
+                <img src ="./champions/Kled.png" style="width: 3%">
+                <img src ="./champions/KogMaw.png" style="width: 3%">
+                <img src ="./champions/Leblanc.png" style="width: 3%">
+                <img src ="./champions/LeeSin.png" style="width: 3%">
+                <img src ="./champions/Leona.png" style="width: 3%">
+                <img src ="./champions/Lillia.png" style="width: 3%">
+                <img src ="./champions/Lissandra.png" style="width: 3%">
+                <img src ="./champions/Lucian.png" style="width: 3%">
+                <img src ="./champions/Lulu.png" style="width: 3%"><br>
+                <img src ="./champions/Lux.png" style="width: 3%">
+                <img src ="./champions/Malphite.png" style="width: 3%">
+                <img src ="./champions/Malzahar.png" style="width: 3%">
+                <img src ="./champions/Maokai.png"   style="width: 3%">
+                <img src ="./champions/MasterYi.png" style="width: 3%">
+                <img src ="./champions/MissFortune.png" style="width: 3%">
+                <img src ="./champions/MonkeyKing.png" style="width: 3%">
+                <img src ="./champions/Mordekaiser.png" style="width: 3%">
+                <img src ="./champions/Nasus.png" style="width: 3%">
+                <img src ="./champions/Morgana.png" style="width: 3%">
+                <img src ="./champions/Nami.png" style="width: 3%">
+                <img src ="./champions/Nautilus.png" style="width: 3%">
+                <img src ="./champions/Neeko.png" style="width: 3%">
+                <img src ="./champions/Nidalee.png" style="width: 3%"><br>
+                <img src ="./champions/Nocturne.png" style="width: 3%">
+                <img src ="./champions/Nunu.png" style="width: 3%">
+                <img src ="./champions/Olaf.png" style="width: 3%">
+                <img src ="./champions/Orianna.png" style="width: 3%">
+                <img src ="./champions/Ornn.png" style="width: 3%">
+                <img src ="./champions/Pantheon.png" style="width: 3%">
+                <img src ="./champions/Poppy.png" style="width: 3%">
+                <img src ="./champions/Pyke.png" style="width: 3%">
+                <img src ="./champions/Qiyana.png" style="width: 3%">
+                <img src ="./champions/Quinn.png" style="width: 3%">
+                <img src ="./champions/Rakan.png" style="width: 3%">
+                <img src ="./champions/Rammus.png" style="width: 3%">
+                <img src ="./champions/RekSai.png" style="width: 3%">
+                <img src ="./champions/Rell.png" style="width: 3%"><br>
+                <img src ="./champions/Renekton.png" style="width: 3%">
+                <img src ="./champions/Rengar.png" style="width: 3%">
+                <img src ="./champions/Riven.png" style="width: 3%">
+                <img src ="./champions/Rumble.png" style="width: 3%">
+                <img src ="./champions/Ryze.png" style="width: 3%">
+                <img src ="./champions/Samira.png" style="width: 3%">
+                <img src ="./champions/Sejuani.png" style="width: 3%">
+                <img src ="./champions/Senna.png" style="width: 3%">
+                <img src ="./champions/Seraphine.png" style="width: 3%">
+                <img src ="./champions/Sett.png" style="width: 3%">
+                <img src ="./champions/Shaco.png" style="width: 3%">
+                <img src ="./champions/Shen.png" style="width: 3%">
+                <img src ="./champions/Shyvana.png" style="width: 3%">
+                <img src ="./champions/Singed.png" style="width: 3%"><br>
+                <img src ="./champions/Sion.png" style="width: 3%">
+                <img src ="./champions/Sivir.png" style="width: 3%">
+                <img src ="./champions/Skarner.png" style="width: 3%">
+                <img src ="./champions/Sona.png" style="width: 3%">
+                <img src ="./champions/Soraka.png" style="width: 3%">
+                <img src ="./champions/Swain.png" style="width: 3%">
+                <img src ="./champions/Sylas.png" style="width: 3%">
+                <img src ="./champions/Syndra.png" style="width: 3%">
+                <img src ="./champions/TahmKench.png" style="width: 3%">
+                <img src ="./champions/Taliyah.png" style="width: 3%">
+                <img src ="./champions/Talon.png" style="width: 3%">
+                <img src ="./champions/Taric.png" style="width: 3%">
+                <img src ="./champions/Teemo.png" style="width: 3%">
+                <img src ="./champions/Thresh.png" style="width: 3%"><br>
+                <img src ="./champions/Tristana.png" style="width: 3%">
+                <img src ="./champions/Trundle.png" style="width: 3%">
+                <img src ="./champions/Tryndamere.png" style="width: 3%">
+                <img src ="./champions/TwistedFate.png" style="width: 3%">
+                <img src ="./champions/Twitch.png" style="width: 3%">
+                <img src ="./champions/Udyr.png" style="width: 3%">
+                <img src ="./champions/Urgot.png" style="width: 3%">
+                <img src ="./champions/Varus.png" style="width: 3%">
+                <img src ="./champions/Vayne.png" style="width: 3%">
+                <img src ="./champions/Veigar.png" style="width: 3%">
+                <img src ="./champions/Velkoz.png" style="width: 3%">
+                <img src ="./champions/Vex.png" style="width: 3%">
+                <img src ="./champions/Vi.png" style="width: 3%">
+                <img src ="./champions/Viego.png" style="width: 3%"><br>
+                <img src ="./champions/Viktor.png" style="width: 3%">
+                <img src ="./champions/Vladimir.png" style="width: 3%">
+                <img src ="./champions/Volibear.png" style="width: 3%">
+                <img src ="./champions/Warwick.png" style="width: 3%">
+                <img src ="./champions/Xayah.png" style="width: 3%">
+                <img src ="./champions/Xerath.png" style="width: 3%">
+                <img src ="./champions/XinZhao.png" style="width: 3%">
+                <img src ="./champions/Yasuo.png" style="width: 3%">
+                <img src ="./champions/Yone.png" style="width: 3%">
+                <img src ="./champions/Yorick.png" style="width: 3%">
+                <img src ="./champions/Yuumi.png" style="width: 3%">
+                <img src ="./champions/Zac.png" style="width: 3%">
+                <img src ="./champions/Zed.png" style="width: 3%">
+                <img src ="./champions/Ziggs.png" style="width: 3%"><br>
+                <img src ="./champions/Zilean.png" style="width: 3%">
+                <img src ="./champions/Zoe.png" style="width: 3%">
+                <img src ="./champions/Zyra.png" style="width: 3%">
+            </div>
+        </div>
+    </body>
 </html>
-
-

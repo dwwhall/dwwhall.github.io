@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+            * {box-sizing: border-box;}
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, san-serif;
+            }
+            .topnav {
+                overflow: hidden;
+                background-color: #e9e9e9;
+            }
+            .topnav a {
+                float: left;
+                display: block;
+                color: black;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 33.3%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #474e5d;
+  color: white;
+}
+
+.container {
+  padding: 0 16px;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: grey;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+
+        <div class="topnav">
+            <a href="index.html">Home</a>
+            <a href="About.html">About</a>
+        </div>
+
+<div class="about-section">
+  <h1>About Page</h1>
+  <p>Legue of Legends Website</p>
+  <p>The beginner player does not have the expertise as a seasoned veteran of League of Legends (LoL), which makes it difficult to understand the various items, heroes, and movements in order for victory.  Our website will provide players with gameplay analytics that will provide beginners and experts with valuable information on LoL.  The aim of the project is to make the website a user-friendly environment for gamers to learn more about competitive gameplay strategies and techniques for LoL. </p>
+</div>
+
+<h2 style="text-align:center">Our Team</h2>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <img src="Blank_profile.png" alt="Xander" style="width:100%">
+      <div class="container">
+        <h2>Alexander Krohannon</h2>
+        <p class="title">Designer</p>
+        <p>Lead designer for LoL website</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <img src="Blank_profile.png" alt="Mike" style="width:100%">
+      <div class="container">
+        <h2>Hunter Gill</h2>
+        <p class="title">Database Developer</p>
+        <p>Created the Design for the database and implemented the graphs for each character</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <img src="van.jpg" alt="John" style="width:100%">
+      <div class="container">
+        <h2>Van Lian</h2>
+        <p class="title">Homepage Moderator</p>
+        <p>Built the homepage and added all the images for the characters</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="column">
+    <div class="card">
+      <img src="Dwight.jpeg" alt="John" style="width:100%">
+      <div class="container">
+        <h2>Dwight Hall</h2>
+        <p class="title">Team Member</p>
+        <p>Helped connect different elements of the website and created the about page.</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
